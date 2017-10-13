@@ -1,0 +1,52 @@
+//In The Name of Allah
+//Mon 6/6/96
+/*
+ID: soroosh4
+LANG: C++11
+TASK: fence9
+*/
+#include <bits/stdc++.h>
+
+#define Init ios_base::sync_with_stdio(0),cin.tie(0)
+#define WFile freopen("fence9.in","r",stdin),freopen("fence9.out","w",stdout)
+#define forar(i,n) for(int i = 0; i < n;i++)
+#define fori(i,a,b) for(long long int i = a; i < b;i++)
+#define ford(i,a,b) for(long long int i = a; i > b;i--)
+#define Log(x) cout << "Log: " << x << endl;
+#define F first
+#define S second
+#define pb push_back
+#define pf push_front
+
+using namespace std;
+
+typedef long long int ll;
+typedef long double ld;
+typedef pair<int,int> pii;
+typedef pair<ll,ll> pll;
+
+const ll mod = 1e9+7;
+const int M = 100*1000+5;
+
+void Solution();
+
+ll n,m,p,b,ans;
+
+int main()
+{
+	Init;
+	WFile;
+	Solution();
+	return 0;
+}
+
+void Solution(){
+	cin >> n >> m >> p;
+	b += __gcd(n,m);
+	b += __gcd(abs(n-p),m);
+	b += p;
+	ans = m*p-b;
+	ans /= 2;
+	ans += 1;
+	cout << ans << endl;
+}
