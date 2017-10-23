@@ -1,5 +1,5 @@
 //In The Name of Allah
-//Tue 25/7/96
+//Mon 1/8/96
 #include <bits/stdc++.h>
 
 #define Init ios_base::sync_with_stdio(0),cin.tie(0),cout.tie(0)
@@ -32,5 +32,20 @@ int main()
 }
 
 void Solution(){
-	
+	string s;
+	cin >> s;
+	int ans = 0;
+	s+="00000000";
+	string check[5] = {"Danil", "Olya", "Slava", "Ann", "Nikita"};
+	forar(i,s.length()){
+		forar(j,5){
+			if(s.compare(i,check[j].length(),check[j]) == 0){
+				ans++;
+			}
+		}
+	}
+	if(ans == 1)
+		cout << "YES" << endl;
+	else
+		cout << "NO" << endl;
 }

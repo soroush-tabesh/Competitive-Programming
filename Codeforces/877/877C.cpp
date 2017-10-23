@@ -1,5 +1,5 @@
 //In The Name of Allah
-//Tue 25/7/96
+//Mon 1/8/96
 #include <bits/stdc++.h>
 
 #define Init ios_base::sync_with_stdio(0),cin.tie(0),cout.tie(0)
@@ -23,6 +23,8 @@ const ll mod = 1e9+7,M = 3e5+5;
 
 void Solution();
 
+int n;
+
 int main()
 {
 	Init;
@@ -32,5 +34,40 @@ int main()
 }
 
 void Solution(){
-	
+	cin >> n;
+	if(n%2){
+		if(n==1){
+			cout << "2\n1 1" << endl;
+			return;
+		}else{
+			cout << (3*n-1)/2 << endl;
+		}
+		cout << "2 1 ";
+		forar(i,n/2-1){
+			cout << 2*i+4 << " ";
+			cout << 2*i+3 << " ";
+			cout << 2*i+2 << " ";
+		}
+		cout << n << " ";
+		cout << n-1 << " ";
+	}else{
+		n--;
+		if(n==1){
+			cout << "3\n2 1 2" << endl;
+			return;
+		}else{
+			cout << (3*n-1)/2+2 << endl;
+		}
+		cout << "2 1 ";
+		forar(i,n/2-1){
+			cout << 2*i+4 << " ";
+			cout << 2*i+3 << " ";
+			cout << 2*i+2 << " ";
+		}
+		cout << n << " ";
+		cout << n-1 << " ";
+		cout << n+1 << " ";
+		cout << n << " ";
+	}
+
 }

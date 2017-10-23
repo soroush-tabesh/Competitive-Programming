@@ -1,5 +1,5 @@
 //In The Name of Allah
-//Tue 25/7/96
+//Mon 1/8/96
 #include <bits/stdc++.h>
 
 #define Init ios_base::sync_with_stdio(0),cin.tie(0),cout.tie(0)
@@ -23,6 +23,8 @@ const ll mod = 1e9+7,M = 3e5+5;
 
 void Solution();
 
+int as[5005],bs[5005];
+
 int main()
 {
 	Init;
@@ -32,5 +34,25 @@ int main()
 }
 
 void Solution(){
-	
+	string s;
+	cin >> s;
+	forar(i,s.size()){
+		as[i+1] = as[i];
+		bs[i+1] = bs[i];
+		if(s[i] == 'a')
+			as[i+1]++;
+		else
+			bs[i+1]++;
+	}
+	int ans = 0;
+	forar(i,s.size()+1){
+		fori(j,i,s.size()+1){
+			int t = 0;
+			t+=as[i];
+			t+=bs[j]-bs[i];
+			t+=as[s.size()]-as[j];
+			ans = max(ans,t);
+		}
+	}
+	cout << ans << endl;
 }
