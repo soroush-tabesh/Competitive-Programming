@@ -23,8 +23,14 @@ const ll mod = 1e9+7,M = 2e5+100;
 
 void Solution();
 
-int n,q,v,stime[M],etime[M],val[M],seg[4*M],lazy[4*M],tme;
+int n;
 vector<int> ch[M];
+int stime[M];
+int etime[M];
+ll val[M];
+ll seg[4*M];
+bool lazy[4*M];
+int tme;
 
 int main()
 {
@@ -35,60 +41,64 @@ int main()
 
 void dfs(int v){
 	stime[v] = tme++;
-	for(int neib : ch[v])
+	for(int neib : ch[v]){
 		dfs(neib);
+	}
 	etime[v] = tme;
 }
 
-int init(int ind=1,int l=0,int r=n){
+int init(int ind,int l,int r){
 	if(l>=r)
 		return 0;
 	if(l==r-1)
 		return seg[ind] = val[l];
-	int mid = (l+r)>>1;
-	seg[ind] = init(ind<<1,l,mid) + init(ind<<1|1,mid,r);
+	seg[ind] = 0;
+	seg[ind] += init(ind*2+1,l,(l+r)/2);
+	seg[ind] += init(ind*2+2,(l+r)/2,r);
 	return seg[ind];
 }
 
-inline void pushiflazy(int ind,int curl,int curr){
+void toggle(int l,int r,int ind,int curl,int curr){
+	if(l >= r)
+		return;
 	if(lazy[ind]){
 		seg[ind] = curr-curl-seg[ind];
 		lazy[ind] = 0;
 		if(curl < curr-1){
-			lazy[ind<<1] ^= 1;
-			lazy[ind<<1|1] ^= 1;
+			lazy[ind*2+1] = !lazy[ind*2+1];
+			lazy[ind*2+2] = !lazy[ind*2+2];
 		}
 	}
-}
-
-void toggle(int l,int r,int ind=1,int curl=0,int curr=n){
-	if(l >= r)
-		return;
-	pushiflazy(ind,curl,curr);
 	if(curr <= r && curl >= l){
 		seg[ind] = curr-curl-seg[ind];
 		if(curl < curr-1){
-			lazy[ind<<1] ^= 1;
-			lazy[ind<<1|1] ^= 1;
+			lazy[ind*2+1] = !lazy[ind*2+1];
+			lazy[ind*2+2] = !lazy[ind*2+2];
 		}
 	}else if(curr>l && curl < r){
-		int mid = (curl+curr)>>1;
-		toggle(l,r,ind<<1,curl,mid);
-		toggle(l,r,ind<<1|1,mid,curr);
-		seg[ind] = seg[ind<<1] + seg[ind<<1|1];
+		toggle(l,r,ind*2+1,curl,(curl+curr)/2);
+		toggle(l,r,ind*2+2,(curl+curr)/2,curr);
+		seg[ind] = seg[ind*2+1] + seg[ind*2+2];
 	}
 }
 
-int query(int l,int r,int ind=1,int curl=0,int curr=n){
+int query(int l,int r,int ind,int curl,int curr){
 	if(l >= r)
 		return 0;
-	pushiflazy(ind,curl,curr);
+	if(lazy[ind]){
+		seg[ind] = curr-curl-seg[ind];
+		lazy[ind] = 0;
+		if(curl < curr-1){
+			lazy[ind*2+1] = !lazy[ind*2+1];
+			lazy[ind*2+2] = !lazy[ind*2+2];
+		}
+	}
 	if(curr <= r && curl >= l){
 		return seg[ind];
 	}else if(curr>l && curl < r){
-		int mid = (curl+curr)>>1,res=0;
-		res += query(l,r,ind<<1,curl,mid);
-		res += query(l,r,ind<<1|1,mid,curr);
+		int res = 0;
+		res += query(l,r,ind*2+1,curl,(curl+curr)/2);
+		res += query(l,r,ind*2+2,(curl+curr)/2,curr);
 		return res;
 	}else{
 		return 0;
@@ -98,14 +108,16 @@ int query(int l,int r,int ind=1,int curl=0,int curr=n){
 void Solution(){
 	cin >> n;
 	forar(i,n-1){
-		cin >> v;
-		ch[v-1].pb(i+1);
+		int a;
+		cin >> a;
+		ch[a-1].pb(i+1);
 	}
 	dfs(0);
 	forar(i,n){
 		cin >> val[stime[i]];
 	}
-	init();
+	init(0,0,n);
+	int q,v;
 	cin >> q;
 	string s;
 	while(q--){
@@ -113,9 +125,9 @@ void Solution(){
 		cin >> v;
 		v--;
 		if(s == "get"){
-			cout << query(stime[v],etime[v]) << endl;
+			cout << query(stime[v],etime[v],0,0,n) << endl;
 		}else{
-			toggle(stime[v],etime[v]);
+			toggle(stime[v],etime[v],0,0,n);
 		}
 	}
 }
