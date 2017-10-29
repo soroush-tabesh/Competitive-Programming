@@ -23,7 +23,7 @@ const ll mod = 1e9+7,M = 2e5+100;
 
 void Solution();
 
-int n,q,v,stime[M],etime[M],val[M],seg[4*M],lazy[4*M],tme,rvst[M];
+int n,q,v,tme,stime[M],etime[M],val[M],seg[4*M],lazy[4*M],rvst[M];
 vector<int> ch[M];
 
 int main()
@@ -33,7 +33,7 @@ int main()
 	return 0;
 }
 
-void dfs(int v=0){
+void dfs(int v = 0){
 	stime[v] = tme++;
 	rvst[stime[v]]=v;
 	for(int neib : ch[v])
@@ -41,7 +41,7 @@ void dfs(int v=0){
 	etime[v] = tme;
 }
 
-void init(int ind=1,int l=0,int r=n){
+void init(int ind = 1,int l = 0,int r = n){
 	if(l==r-1){
 		seg[ind] = val[rvst[l]];
 		return;
@@ -52,7 +52,7 @@ void init(int ind=1,int l=0,int r=n){
 	seg[ind] = seg[ind<<1]+seg[ind<<1|1];
 }
 
-void pushiflazy(int ind,int curl,int curr){
+inline void pushiflazy(int ind,int curl,int curr){
 	if(!lazy[ind])
 		return;
 	lazy[ind] = 0;
@@ -63,7 +63,7 @@ void pushiflazy(int ind,int curl,int curr){
 	lazy[ind<<1|1] ^= 1;
 }
 
-void toggle(int l,int r,int ind=1,int curl=0,int curr=n){
+void toggle(int l,int r,int ind = 1,int curl = 0,int curr = n){
 	if(curr <= r && curl >= l){
 		seg[ind] = curr-curl-seg[ind];
 		lazy[ind] ^= 1;
@@ -88,7 +88,7 @@ int query(int l,int r,int ind=1,int curl=0,int curr=n){
 	return query(l,r,ind<<1,curl,mid)+query(l,r,ind<<1|1,mid,curr);
 }
 
-void Solution(){
+inline void Solution(){
 	cin >> n;
 	for(int i = 1; i < n;i++){
 		cin >> v;
