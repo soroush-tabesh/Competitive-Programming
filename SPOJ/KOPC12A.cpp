@@ -19,7 +19,7 @@ typedef long double ld;
 typedef pair<int,int> pii;
 typedef pair<ll,ll> pll;
 
-const ll mod = 1e9+7,M = 1e5+50;
+const ll mod = 1e9+7,M = 1e4+50;
 
 void Solution();
 
@@ -37,26 +37,9 @@ int main()
 ll getsum(ll x){
 	ll res = 0;
 	forar(i,n){
-		res += (abs(bl[i].F-x))*(bl[i].S);
+		res += abs(bl[i].F-x)*bl[i].S;
 	}
 	return res;
-}
-
-ll solve(ll lo, ll hi){
-	if(hi - lo+1 <= 6){
-		ll res = mod;
-		fori(i,lo,hi+1){
-			res = min(res,getsum(i));
-		}
-		return res;
-	}
-	ll mid1 = (lo*2+hi)/3;
-	ll mid2 = (lo+hi*2)/3;
-	if(getsum(mid1) <= getsum(mid2)){
-		return solve(lo,mid2);
-	}else{
-		return solve(mid1,hi);
-	}
 }
 
 void Solution(){
@@ -92,6 +75,7 @@ void Solution(){
 		*/
 		
 		// O(nlgn)
+		memset(bl,0,sizeof(bl));
 		cin >> n;
 		forar(i,n){
 			cin >> bl[i].F;
@@ -99,6 +83,20 @@ void Solution(){
 		forar(i,n){
 			cin >> bl[i].S;
 		}
-		cout << solve(0,200*1000) << endl;
+		ll hi=20*1000,low=0;
+		while(hi-low>10){
+			ll mid1 = (2*low+hi)/3;
+			ll mid2 = (low+2*hi)/3;
+			if(getsum(mid1)<= getsum(mid2)){
+				hi = mid2;
+			}else{
+				low = mid1;
+			}
+		}
+		ll ans = getsum(low);
+		fori(i,low-10,hi+10){
+			ans = min(ans,getsum(i));
+		}
+		cout << ans << endl;
 	}
 }
