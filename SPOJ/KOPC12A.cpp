@@ -37,15 +37,15 @@ int main()
 ll getsum(ll x){
 	ll res = 0;
 	forar(i,n){
-		res += abs(bl[i].F-bl[x].F)*bl[i].S;
+		res += abs(bl[i].F-x)*bl[i].S;
 	}
 	return res;
 }
 
 ll solve(ll lo, ll hi){
-	if(hi - lo <= 10){
+	if(hi - lo <= 20){
 		ll res = mod;
-		fori(i,lo,hi+1){
+		fori(i,lo-1,hi+1){
 			res = min(res,getsum(i));
 		}
 		return res;
@@ -53,9 +53,9 @@ ll solve(ll lo, ll hi){
 	ll mid1 = (lo*2+hi)/3;
 	ll mid2 = (lo+hi*2)/3;
 	if(getsum(mid1) <= getsum(mid2)){
-		return solve(lo,mid2);
+		return solve(lo-1,mid2+1);
 	}else{
-		return solve(mid1,hi);
+		return solve(mid1-1,hi+1);
 	}
 }
 
@@ -100,6 +100,6 @@ void Solution(){
 			cin >> bl[i].S;
 		}
 		sort(bl,bl+n,less<pll>());
-		cout << solve(0,n-1) << endl;
+		cout << solve(0,100*1000) << endl;
 	}
 }
