@@ -19,7 +19,7 @@ typedef long double ld;
 typedef pair<int,int> pii;
 typedef pair<ll,ll> pll;
 
-const ll mod = 1e9+7,M = 1e4+50;
+const ll mod = 1e9+7,M = 1e5+50;
 
 void Solution();
 
@@ -37,15 +37,15 @@ int main()
 ll getsum(ll x){
 	ll res = 0;
 	forar(i,n){
-		res += abs(bl[i].F-x)*bl[i].S;
+		res += (abs(bl[i].F-x))*(bl[i].S);
 	}
 	return res;
 }
 
 ll solve(ll lo, ll hi){
-	if(hi - lo <= 20){
+	if(hi - lo+1 <= 6){
 		ll res = mod;
-		fori(i,lo-1,hi+1){
+		fori(i,lo,hi+1){
 			res = min(res,getsum(i));
 		}
 		return res;
@@ -53,9 +53,9 @@ ll solve(ll lo, ll hi){
 	ll mid1 = (lo*2+hi)/3;
 	ll mid2 = (lo+hi*2)/3;
 	if(getsum(mid1) <= getsum(mid2)){
-		return solve(lo-1,mid2+1);
+		return solve(lo,mid2);
 	}else{
-		return solve(mid1-1,hi+1);
+		return solve(mid1,hi);
 	}
 }
 
@@ -99,7 +99,6 @@ void Solution(){
 		forar(i,n){
 			cin >> bl[i].S;
 		}
-		sort(bl,bl+n,less<pll>());
-		cout << solve(0,100*1000) << endl;
+		cout << solve(0,200*1000) << endl;
 	}
 }
