@@ -1,3 +1,5 @@
+// In The Name of Allah
+// Sun 18/6/96
 #include<bits/stdc++.h>
 
 #define fori(i,a,b) for(int i = a;i < b;i++)
