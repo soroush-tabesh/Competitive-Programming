@@ -1,5 +1,4 @@
 // In the name of Allah
-// http://codeforces.com/blog/entry/22566
 const int base = 1000000000;
 const int base_digits = 9;
 struct bigint
