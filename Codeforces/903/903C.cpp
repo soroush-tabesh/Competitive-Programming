@@ -23,6 +23,9 @@ const ll mod = 1e9+7,M = 2e5+100;
 
 void Solution();
 
+int n;
+map<int,int> data;
+
 int main()
 {
 	Init;
@@ -31,5 +34,13 @@ int main()
 }
 
 void Solution(){
-	
+	cin >> n;
+	int ans = 0;
+	forar(i,n){
+		int a;
+		cin >> a;
+		data[a]++;
+		ans = max(ans,data[a]);
+	}
+	cout << ans << endl;
 }

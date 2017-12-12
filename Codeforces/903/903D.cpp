@@ -42,14 +42,75 @@ void Solution(){
 		rmap[a]++;
 		data.pb(a);
 	}
-	ll sum = 0,pref=0;
+	ll sum1 = 0,sum2=0,pref=0,bnd=1LL*100000*100000*100000;
 	forar(i,n){
-		sum += (i*data[i])-pref;
+		sum1 += (i*data[i])-pref;
+		if(sum1 >= bnd){
+			sum2+=sum1/bnd;
+			sum1%=bnd;
+		}
+		if(sum1 < 0){
+			sum2+=sum1/bnd-1;
+			sum1-=(sum1/bnd-1)*bnd;
+			if(sum1 >= bnd){
+				sum2+=sum1/bnd;
+				sum1%=bnd;
+			}
+		}
 		pref+=data[i];
 	}
 	for(ll x : data){
 		rmap[x]--;
-		sum -= rmap[x+1]-rmap[x-1];
+		sum1 -= rmap[x+1]-rmap[x-1];
 	}
-	cout << sum << endl;
+	if(sum1 >= bnd){
+		sum2+=sum1/bnd;
+		sum1%=bnd;
+	}
+	if(sum1 < 0){
+		sum2+=sum1/bnd-1;
+		sum1-=(sum1/bnd-1)*bnd;
+		if(sum1 >= bnd){
+			sum2+=sum1/bnd;
+			sum1%=bnd;
+		}
+	}
+	if(sum2!=0){
+		if(sum2 > 0){
+			cout << sum2;
+			stringstream ss;
+			forar(i,15){
+				ss << sum1%10;
+				sum1/=10;
+			}
+			string s = ss.str();
+			reverse(s.begin(),s.end());
+			cout << s << endl;
+		}else{
+			if(sum1){
+				cout << "-";
+				sum2++;
+				if(sum2)
+					cout << abs(sum2);
+				sum1 = bnd-sum1;
+				stringstream ss;
+				forar(i,15){
+					ss << sum1%10;
+					sum1/=10;
+				}
+				string s = ss.str();
+				reverse(s.begin(),s.end());
+				if(!sum2){
+					while(s[0] == '0'){
+						s.erase(s.begin());
+					}
+				}
+				cout << s << endl;
+			}else{
+				cout << sum2 << "000000000000000" << endl;
+			}
+		}
+	}else{
+		cout << sum1 << endl;
+	}
 }

@@ -23,9 +23,6 @@ const ll mod = 1e9+7,M = 2e5+100;
 
 void Solution();
 
-int h1,a1,c1;
-int h2,a2;
-
 int main()
 {
 	Init;
@@ -34,26 +31,9 @@ int main()
 }
 
 void Solution(){
-	cin >> h1 >> a1 >> c1 >> h2 >> a2;
-	vector<bool>ans;
-	while(h2 > 0){
-		if(a1 >= h2){
-			h2-=a1;
-			ans.pb(1);
-			continue;
-		}
-		if(a2 >= h1){
-			ans.pb(0);
-			h1 += c1;
-			h1 -= a2;
-			continue;
-		}
-		ans.pb(1);
-		h2 -= a1;
-		h1 -= a2;
-	}
-	cout << ans.size() << endl;
-	for(bool x : ans){
-		cout << (x?"STRIKE":"HEAL") << endl;
+	WFile;
+	cout << 20*1000 << endl;
+	fori(i,180000,200000){
+		cout << i*4999*1LL << " ";
 	}
 }
