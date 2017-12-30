@@ -31,11 +31,11 @@ int main()
 }
 
 void Solution(){
-	string s;
+	string s,t="aeiou";
 	cin >> s;
 	int ans = 0;
 	for(char c : s){
-		if(c == 'a' || c == 'e' || c == 'u' || c == 'o' || c == 'i' || (c-'0' >=0 && c-'0'<=9 && (c-'0')%2 == 1))
+		if(t.find(c,0) != string::npos || (isdigit(c) && (c-'0')%2))
 			ans++;
 	}
 	cout << ans << endl;
