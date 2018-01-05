@@ -1,5 +1,5 @@
 //In The Name of Allah
-//Wed 13/10/96
+//Fri 15/10/96
 #include <bits/stdc++.h>
 
 #define Init ios_base::sync_with_stdio(0),cin.tie(0),cout.tie(0)
@@ -19,12 +19,9 @@ typedef long double ld;
 typedef pair<int,int> pii;
 typedef pair<ll,ll> pll;
 
-const ll mod = 1e9+7,M = 2e3+100;
+const ll mod = 1e9+7,M = 1e5+100;
 
 void Solution();
-
-int n,m;
-int inpa[M],inpb[M];
 
 int main()
 {
@@ -34,22 +31,20 @@ int main()
 }
 
 void Solution(){
-	cin >> n >> m;
-	forar(i,n){
-		cin >> inpa[i];
+	ll a,b;
+	cin >> a >> b;
+	ll yel,gr,bl;
+	cin >> yel >> gr >> bl;
+	a-= 2*yel;
+	a-=gr;
+	b-=3*bl;
+	b-=gr;
+	ll ans = 0;
+	if(a < 0){
+		ans -= a;		
 	}
-	forar(i,m){
-		cin >> inpb[i];
-	}
-	int ans = 0;
-	forar(j,m-n+1){
-		bool is = true;
-		forar(i,n){
-			if(inpa[i]+inpb[i+j] != 1)
-				is = false;
-		}
-		if(is)
-			ans++;
+	if(b < 0){
+		ans -= b;
 	}
 	cout << ans << endl;
 }
