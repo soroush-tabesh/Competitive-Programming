@@ -1,5 +1,5 @@
 //In The Name of Allah
-//Fri 6/11/96
+//Sat 23/10/96
 #include <bits/stdc++.h>
 
 #define Init ios_base::sync_with_stdio(0),cin.tie(0),cout.tie(0)
@@ -23,6 +23,8 @@ const ll mod = 1e9+7,M = 2e5+100;
 
 void Solution();
 
+string sa,sb;
+
 int main()
 {
 	Init;
@@ -30,29 +32,35 @@ int main()
 	return 0;
 }
 
+void solve(int j){
+	if(j >= sb.length())
+		return;
+	string tsa = sa;
+	int tar = lower_bound(sa.begin()+j,sa.end(),sb[j]) - sa.begin();
+	swap(tsa[j],tsa[tar]);
+	sort(tsa.begin()+j+1,tsa.end());
+	while(tsa > sb){
+		tsa = sa;
+		swap(tsa[j],tsa[--tar]);
+		sort(tsa.begin()+j+1,tsa.end());
+	}
+	sa = tsa;
+	if(sa[j] != sb[j]){
+		sort(sa.begin()+j+1,sa.end(),greater<char>());
+		return;
+	}
+	solve(j+1);
+}
+
 void Solution(){
-    string s,t;
-	cin >> s >> t;
-	vector<int> lps(t.length());
-	int len = 0;
-	lps[0] = len; // lps[last_index] = lps_length
-	fori(i,1,t.length()){
-		while(len > 0 && t[i] != t[len]){
-			len = lps[len-1];
+	cin >> sa >> sb;
+	sort(sa.begin(),sa.end());
+	if(sa.length() < sb.length()){
+		forar(i,sa.length()){
+			cout << sa[sa.length()-i-1];
 		}
-		if(t[i] == t[len]){
-			lps[i] = ++len;
-		}
+		return;
 	}
-	int j = 0;
-	int ans = 0;
-	forar(i,s.length()){
-		while(j>0 && s[i] != t[j])
-			j = lps[j-1];
-		if(s[i] == t[j])
-			j++;
-		if(j == t.length())
-			ans++,j = lps[j-1];
-	}
-	cout << ans << endl;
+	solve(0);
+	cout << sa << endl;
 }

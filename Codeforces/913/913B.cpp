@@ -1,5 +1,5 @@
 //In The Name of Allah
-//Fri 6/11/96
+//Mon 18/10/96
 #include <bits/stdc++.h>
 
 #define Init ios_base::sync_with_stdio(0),cin.tie(0),cout.tie(0)
@@ -19,9 +19,12 @@ typedef long double ld;
 typedef pair<int,int> pii;
 typedef pair<ll,ll> pll;
 
-const ll mod = 1e9+7,M = 2e5+100;
+const ll mod = 1e9+7,M = 1e5+100;
 
 void Solution();
+
+int n;
+vector<int> ch[1005];
 
 int main()
 {
@@ -31,28 +34,23 @@ int main()
 }
 
 void Solution(){
-    string s,t;
-	cin >> s >> t;
-	vector<int> lps(t.length());
-	int len = 0;
-	lps[0] = len; // lps[last_index] = lps_length
-	fori(i,1,t.length()){
-		while(len > 0 && t[i] != t[len]){
-			len = lps[len-1];
-		}
-		if(t[i] == t[len]){
-			lps[i] = ++len;
+	cin >> n;
+	fori(i,1,n){
+		int a;
+		cin >> a;
+		ch[--a].pb(i);
+	}
+	bool is = true;
+	forar(i,n){
+		if(!ch[i].empty()){
+			int cnt = 0;
+			for(int v: ch[i]){
+				if(ch[v].empty())
+					cnt++;
+			}
+			if(cnt < 3)
+				is = false;
 		}
 	}
-	int j = 0;
-	int ans = 0;
-	forar(i,s.length()){
-		while(j>0 && s[i] != t[j])
-			j = lps[j-1];
-		if(s[i] == t[j])
-			j++;
-		if(j == t.length())
-			ans++,j = lps[j-1];
-	}
-	cout << ans << endl;
+	cout << (is ? "Yes" : "No") << endl;
 }

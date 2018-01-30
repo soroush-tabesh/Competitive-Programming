@@ -1,5 +1,5 @@
 //In The Name of Allah
-//Tue 28/9/96
+//Sat 30/10/96
 #include <bits/stdc++.h>
 
 #define Init ios_base::sync_with_stdio(0),cin.tie(0),cout.tie(0)

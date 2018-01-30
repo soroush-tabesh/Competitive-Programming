@@ -1,5 +1,5 @@
 //In The Name of Allah
-//Fri 6/11/96
+//Wed 27/10/96
 #include <bits/stdc++.h>
 
 #define Init ios_base::sync_with_stdio(0),cin.tie(0),cout.tie(0)
@@ -23,6 +23,9 @@ const ll mod = 1e9+7,M = 2e5+100;
 
 void Solution();
 
+int n,ans;
+set<int> adj[M];
+
 int main()
 {
 	Init;
@@ -31,28 +34,18 @@ int main()
 }
 
 void Solution(){
-    string s,t;
-	cin >> s >> t;
-	vector<int> lps(t.length());
-	int len = 0;
-	lps[0] = len; // lps[last_index] = lps_length
-	fori(i,1,t.length()){
-		while(len > 0 && t[i] != t[len]){
-			len = lps[len-1];
-		}
-		if(t[i] == t[len]){
-			lps[i] = ++len;
-		}
+	cin >> n;
+	forar(i,n-1){
+		int a,b;
+		cin >> a >> b;
+		adj[--a].insert(--b);
+		adj[b].insert(a);
 	}
-	int j = 0;
-	int ans = 0;
-	forar(i,s.length()){
-		while(j>0 && s[i] != t[j])
-			j = lps[j-1];
-		if(s[i] == t[j])
-			j++;
-		if(j == t.length())
-			ans++,j = lps[j-1];
+	forar(i,n-1){
+		int a,b;
+		cin >> a >> b;
+		--a;--b;
+		ans += (adj[a].find(b) != adj[a].end());
 	}
 	cout << ans << endl;
 }

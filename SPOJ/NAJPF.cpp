@@ -23,20 +23,25 @@ const ll mod = 1e9+7,M = 2e5+100;
 
 void Solution();
 
+int lps[M*5];
+
 int main()
 {
 	Init;
-	Solution();
+	int _t;
+	cin >> _t;
+	while(_t--)
+		Solution();
 	return 0;
 }
 
 void Solution(){
-    string s,t;
+	string s,t;
 	cin >> s >> t;
-	vector<int> lps(t.length());
 	int len = 0;
-	lps[0] = len; // lps[last_index] = lps_length
+	lps[0] = 0; // lps[last_index] = lps_length
 	fori(i,1,t.length()){
+		lps[i] = 0;
 		while(len > 0 && t[i] != t[len]){
 			len = lps[len-1];
 		}
@@ -45,14 +50,22 @@ void Solution(){
 		}
 	}
 	int j = 0;
-	int ans = 0;
+	vector<int> anslist;
 	forar(i,s.length()){
 		while(j>0 && s[i] != t[j])
 			j = lps[j-1];
 		if(s[i] == t[j])
 			j++;
 		if(j == t.length())
-			ans++,j = lps[j-1];
+			j = lps[j-1],anslist.pb(i+2-t.length());
 	}
-	cout << ans << endl;
+	if(anslist.empty()){
+		cout << "Not Found" << endl << endl;
+	}else{
+		cout << anslist.size() << endl;
+		for(int x : anslist){
+			cout << x << " ";
+		}
+		cout << endl << endl;
+	}
 }

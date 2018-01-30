@@ -1,5 +1,5 @@
 //In The Name of Allah
-//Fri 6/11/96
+//Mon 9/11/96
 #include <bits/stdc++.h>
 
 #define Init ios_base::sync_with_stdio(0),cin.tie(0),cout.tie(0)
@@ -31,28 +31,18 @@ int main()
 }
 
 void Solution(){
-    string s,t;
-	cin >> s >> t;
-	vector<int> lps(t.length());
-	int len = 0;
-	lps[0] = len; // lps[last_index] = lps_length
-	fori(i,1,t.length()){
-		while(len > 0 && t[i] != t[len]){
-			len = lps[len-1];
-		}
-		if(t[i] == t[len]){
-			lps[i] = ++len;
-		}
+    int n,m;
+	map<string,string> ip2n;
+	cin >> n >>m ;
+	forar(i,n){
+		string a,b;
+		cin >> a >>b;
+		b+=';';
+		ip2n[b] = a;
 	}
-	int j = 0;
-	int ans = 0;
-	forar(i,s.length()){
-		while(j>0 && s[i] != t[j])
-			j = lps[j-1];
-		if(s[i] == t[j])
-			j++;
-		if(j == t.length())
-			ans++,j = lps[j-1];
+	forar(i,m){
+		string a,b;
+		cin >> a >> b;
+		cout << a << " " << b << " #" << ip2n[b] << endl;
 	}
-	cout << ans << endl;
 }

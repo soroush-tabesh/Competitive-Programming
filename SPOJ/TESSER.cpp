@@ -23,20 +23,37 @@ const ll mod = 1e9+7,M = 2e5+100;
 
 void Solution();
 
+int lps[M];
+
 int main()
 {
 	Init;
-	Solution();
+	int _t;
+	cin >> _t;
+	while(_t--)
+		Solution();
 	return 0;
 }
 
 void Solution(){
-    string s,t;
-	cin >> s >> t;
-	vector<int> lps(t.length());
+    int n,a,lst;
+	string s,t;
+	cin >> n >> lst;	
+	forar(i,n-1){
+		cin >> a;
+		if(a > lst)
+			s+='G';
+		else if(a == lst)
+			s+='E';
+		else
+			s+='L';
+		lst = a;
+	}
+	cin >> t;
 	int len = 0;
-	lps[0] = len; // lps[last_index] = lps_length
+	lps[0] = 0; // lps[last_index] = lps_length
 	fori(i,1,t.length()){
+		lps[i] = 0;
 		while(len > 0 && t[i] != t[len]){
 			len = lps[len-1];
 		}
@@ -44,8 +61,7 @@ void Solution(){
 			lps[i] = ++len;
 		}
 	}
-	int j = 0;
-	int ans = 0;
+	int j = 0,ans = 0;
 	forar(i,s.length()){
 		while(j>0 && s[i] != t[j])
 			j = lps[j-1];
@@ -54,5 +70,5 @@ void Solution(){
 		if(j == t.length())
 			ans++,j = lps[j-1];
 	}
-	cout << ans << endl;
+	cout << (ans ? "YES" : "NO") << endl;
 }

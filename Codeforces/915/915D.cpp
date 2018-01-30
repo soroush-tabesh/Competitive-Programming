@@ -1,5 +1,5 @@
 //In The Name of Allah
-//Fri 6/11/96
+//Sat 23/10/96
 #include <bits/stdc++.h>
 
 #define Init ios_base::sync_with_stdio(0),cin.tie(0),cout.tie(0)
@@ -23,6 +23,10 @@ const ll mod = 1e9+7,M = 2e5+100;
 
 void Solution();
 
+int n,m,ans;
+vector<int> adj[1000];
+bool mark[1000],ispar[1000];
+
 int main()
 {
 	Init;
@@ -30,29 +34,28 @@ int main()
 	return 0;
 }
 
+void dfs(int v){
+	mark[v] = ispar[v] = 1;
+	for(int neib : adj[v]){
+		if(mark[neib]){
+			ans += ispar[neib];
+		}
+	}
+	ispar[v] = 0;
+}
+
 void Solution(){
-    string s,t;
-	cin >> s >> t;
-	vector<int> lps(t.length());
-	int len = 0;
-	lps[0] = len; // lps[last_index] = lps_length
-	fori(i,1,t.length()){
-		while(len > 0 && t[i] != t[len]){
-			len = lps[len-1];
-		}
-		if(t[i] == t[len]){
-			lps[i] = ++len;
-		}
+	cin >> n >> m;
+	forar(i,m){
+		int a,b;
+		cin >> a >> b;
+		--a,--b;
+		adj[a].pb(b);
+		adj[b].pb(a);
 	}
-	int j = 0;
-	int ans = 0;
-	forar(i,s.length()){
-		while(j>0 && s[i] != t[j])
-			j = lps[j-1];
-		if(s[i] == t[j])
-			j++;
-		if(j == t.length())
-			ans++,j = lps[j-1];
-	}
-	cout << ans << endl;
+	dfs(0);
+	if(ans <= n)
+		cout << "YES" << endl;
+	else
+		cout << "NO" << endl;
 }

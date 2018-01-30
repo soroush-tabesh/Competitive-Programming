@@ -1,5 +1,5 @@
 //In The Name of Allah
-//Fri 6/11/96
+//Mon 18/10/96
 #include <bits/stdc++.h>
 
 #define Init ios_base::sync_with_stdio(0),cin.tie(0),cout.tie(0)
@@ -19,9 +19,13 @@ typedef long double ld;
 typedef pair<int,int> pii;
 typedef pair<ll,ll> pll;
 
-const ll mod = 1e9+7,M = 2e5+100;
+const ll mod = 1e9+7,M = 1e5+100;
 
 void Solution();
+
+ll n,l,inf = ll(1e18);
+pll bt[40];
+ll wst[40];
 
 int main()
 {
@@ -30,29 +34,39 @@ int main()
 	return 0;
 }
 
+ll ppow(ll base,ll exp){
+	if(exp == 0)
+		return 1;
+	ll res = ppow(base,exp/2);
+	res*=res;
+	if(exp%2)
+		res*=base;
+	return res;
+}
+
+bool comp(pll a,pll b){
+	return (a.F*b.S) < (a.S*b.F) || ((a.F*b.S) < (a.S*b.F) && a.S < b.S);
+}
+
+ll slv(ll x,ll i = 0){
+	ll ans = 0;
+	ll d = x/bt[i].S;
+	ans += bt[i].F*d;
+	x -= bt[i].S*d;
+	if(x>0){
+		return min(slv(x,i+1),bt[i].F)+ans;
+	}else{
+		return ans;
+	}
+}
+
 void Solution(){
-    string s,t;
-	cin >> s >> t;
-	vector<int> lps(t.length());
-	int len = 0;
-	lps[0] = len; // lps[last_index] = lps_length
-	fori(i,1,t.length()){
-		while(len > 0 && t[i] != t[len]){
-			len = lps[len-1];
-		}
-		if(t[i] == t[len]){
-			lps[i] = ++len;
-		}
+	cin >> n >> l;
+	forar(i,n){
+		cin >> bt[i].F;
+		bt[i].S = ppow(2,i);
 	}
-	int j = 0;
-	int ans = 0;
-	forar(i,s.length()){
-		while(j>0 && s[i] != t[j])
-			j = lps[j-1];
-		if(s[i] == t[j])
-			j++;
-		if(j == t.length())
-			ans++,j = lps[j-1];
-	}
+	sort(bt,bt+n,comp);
+	ll ans = slv(l);
 	cout << ans << endl;
 }
