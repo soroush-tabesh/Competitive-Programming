@@ -1,5 +1,5 @@
 //In The Name of Allah
-//Tue 28/9/96
+//Tue 10/11/96
 #include <bits/stdc++.h>
 
 #define Init ios_base::sync_with_stdio(0),cin.tie(0),cout.tie(0)
@@ -23,13 +23,35 @@ const ll mod = 1e9+7,M = 2e5+100;
 
 void Solution();
 
+int n,t,dist[30][30];
+
 int main()
 {
 	Init;
-	Solution();
+	cin >> t;
+	while(t--)
+		Solution();
 	return 0;
 }
 
 void Solution(){
-	
+	cin >> n;
+	forar(i,n){
+		forar(j,n){
+			cin >> dist[i][j];
+		}
+	}
+	forar(k,n){
+		forar(i,n){
+			forar(j,n){
+				dist[i][j] = min(dist[i][j],dist[i][k]+dist[k][j]);
+			}
+		}
+	}
+	forar(i,n){
+		forar(j,n){
+			cout << dist[i][j] << " ";
+		}
+	}
+	cout << endl;
 }

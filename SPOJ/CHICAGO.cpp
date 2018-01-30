@@ -1,5 +1,5 @@
 //In The Name of Allah
-//Tue 10/11/96
+//Fri 10/11/96
 #include <bits/stdc++.h>
 
 #define Init ios_base::sync_with_stdio(0),cin.tie(0),cout.tie(0)
@@ -23,40 +23,41 @@ const ll mod = 1e9+7,M = 2e5+100;
 
 void Solution();
 
-int t,m,n,dist[2000];
-// directed graph
-vector<pair<pair<int,int>,int> > graph;
-// uva 499
+int n,m;
+ld dist[100];
+vector<pair<pii,ld> > edges;
 
 int main()
 {
 	Init;
-	cin >> t;
-	while(t--)
-		Solution();
+	cin >> n;
+	Solution();
 	return 0;
 }
 
 void Solution(){
-	cin >> n >> m;
-	graph.clear();
-	fill(dist,dist+n,mod);
-	forar(i,m){
-		int a,b,c;
-		cin >> a >> b >> c;
-		graph.emplace_back(mp(mp(a,b),c));
-	}
-	dist[0] = 0;
+    if(n == 0)
+		return;
+	edges.clear();
+	dist[0] = 1;
 	forar(i,n-1){
+		dist[i+1] = 0;
+	}
+	cin >> m;
+	forar(i,m){
+		int a,b;
+		ld d;
+		cin >> a >> b >> d;
+		edges.pb(mp(mp(--a,--b),d/100.0));
+	}
+	forar(i,n){
 		forar(j,m){
-			dist[graph[j].F.S] = min(dist[graph[j].F.S],dist[graph[j].F.F]+graph[j].S);
+			dist[edges[j].F.S] = max(dist[edges[j].F.S],dist[edges[j].F.F]*edges[j].S);
+			dist[edges[j].F.F] = max(dist[edges[j].F.F],dist[edges[j].F.S]*edges[j].S);
 		}
 	}
-	forar(j,m){
-		if(dist[graph[j].F.S]>dist[graph[j].F.F]+graph[j].S){
-			cout << "possible" << endl; // negative cycle detected
-			return;
-		}
-	}
-	cout << "not possible" << endl;
+	cout << fixed << setprecision(6);
+	cout << dist[n-1]*100 << " percent" << endl;
+	cin >> n;
+	Solution();
 }
