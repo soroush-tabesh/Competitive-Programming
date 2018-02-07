@@ -37,7 +37,7 @@ int main()
 	return 0;
 }
 
-void Solution(){
+inline void Solution(){
 	cin >> n >> m;
 	forar(i,m){
 		int a,b,c;
