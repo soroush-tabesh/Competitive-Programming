@@ -20,6 +20,7 @@
 #define mp make_pair
 
 using namespace std;
+using namespace __gnu_pbds;
 
 // custom node update
 template<class Node_CItr,
