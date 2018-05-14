@@ -1,5 +1,6 @@
 //In The Name of Allah
 //Tue 18/2/97
+#pragma GCC optimize "-Ofast"
 #include <bits/stdc++.h>
 
 #define Init ios_base::sync_with_stdio(0),cin.tie(0),cout.tie(0)
@@ -25,9 +26,10 @@ void Solution();
 
 ll n;
 ll inp[5100];
-map<ll,ll> facts[5100];
 ll sfacts[5100];
 ll ans[5100];
+bool exs[5100];
+map<ll,int> ord; int cn= 0;
 
 int32_t main()
 {
@@ -36,57 +38,50 @@ int32_t main()
 	return 0;
 }
 
-void factorize(ll n,map<ll,ll> &prfc){
-	for(ll i = 2;i*i <= n;i++){
-		while(n%i == 0){
-			n/=i;
-			prfc[i]++;
-		}
-	}
-	if(n>1)
-		prfc[n]++;
-}
-
-ll fac2s(map<ll,ll>&prfc){
-	ll res = 1;
-	for(auto it : prfc){
-		if(it.S % 2)
-			res *= it.F;
-	}
-	return res+476;
-}
-
 inline void Solution(){
 	cin >> n;
 	forar(i,n){
 		cin >> inp[i];
-		factorize(abs(inp[i]),facts[i]);
-		sfacts[i] = fac2s(facts[i]);
-	}
-	unordered_set<ll> posfact;
-	unordered_set<ll> negfact;
-	posfact.reserve(95863);
-	negfact.reserve(95863);
-	forar(s,n){
-		posfact.clear();
-		negfact.clear();
-		fori(e,s,n){
-			if(inp[e]>0){
-				posfact.insert(sfacts[e]);
-			}else{
-				negfact.insert(sfacts[e]);
+		
+		if(!inp[i])
+			continue;
+		
+		ll t = abs(inp[i]);
+		sfacts[i] = (inp[i]>=0?1:-1);
+		
+		for(ll j = 2;j*j <= t;j++){
+			int c = 0;
+			while(t%j == 0){
+				t/=j;
+				c++;
 			}
-			ans[posfact.size() + negfact.size()]++;
+			if(c%2)
+				sfacts[i] *= j;
+		}
+		if(t>1)
+			sfacts[i] *= t;
+		
+		if(!ord[sfacts[i]])
+			ord[sfacts[i]] = ++cn;
+		sfacts[i] = ord[sfacts[i]];
+	}
+	forar(s,n){
+		forar(i,5100){
+			exs[i]=0;
+		}
+		
+		int res = 0;
+		fori(e,s,n){
+			if(!exs[sfacts[e]] && sfacts[e]){
+				res++;
+				exs[sfacts[e]] = 1;
+			}
+			ans[max(res,1)]++;
 		}
 	}
+
 	forar(i,n){
 		cout << ans[i+1] << " ";
 	}
 	cout << endl;
 }
-
-
-
-
-
-

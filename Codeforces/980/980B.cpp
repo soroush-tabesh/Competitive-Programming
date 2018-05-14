@@ -84,18 +84,19 @@ inline void Solution(){
 			cout << '.';
 		}
 		cout << endl;
-		
+		cout << '.';
 		forar(i,k/2){
 			cout << '#';
 		}
-		forar(i,n-k/2){
+		forar(i,n-k/2-1){
 			cout << '.';
 		}
 		cout << endl;
+		cout << '.';
 		forar(i,k/2){
 			cout << '#';
 		}
-		forar(i,n-k/2){
+		forar(i,n-k/2-1){
 			cout << '.';
 		}
 		cout << endl;
