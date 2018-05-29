@@ -1,5 +1,5 @@
 //In The Name of Allah
-//Tue 8/3/97
+//Thu 31/2/97
 #include <bits/stdc++.h>
 
 #define Init ios_base::sync_with_stdio(0),cin.tie(0),cout.tie(0)
@@ -23,6 +23,10 @@ const ll mod = 1e9+7,M = 2e5+100;
 
 void Solution();
 
+int n,m;
+bool mat[3000][3000];
+int rep[3000];
+
 int32_t main()
 {
 	Init;
@@ -31,5 +35,28 @@ int32_t main()
 }
 
 inline void Solution(){
+	cin >> n;
+	cin >> m;
+	forar(i,n){
+		forar(j,m){
+			char c;
+			cin >> c;
+			mat[i][j] = (c=='1');
+			if(c=='1')
+				++rep[j];
+		}
+	}
+	forar(i,n){
+		bool is = true;
+		forar(j,m){
+			if(mat[i][j] == 1 && rep[j] < 2)
+				is = false;
+		}
+		if(is){
+			cout << "YES" << endl;
+			return;
+		}
+	}
+	cout << "NO" << endl;
 	
 }

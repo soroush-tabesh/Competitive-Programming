@@ -33,13 +33,11 @@ int32_t main()
 int mark[10000];
 
 inline void Solution(){
-	int mx = 0;
+	int mx = 0,ind = 0;
 	fori(i,2,1000){
 		memset(mark,0,sizeof mark);
 		int nom = 1,res=0;
 		for(int k = 1;k <= 10000;k++){
-			nom *= 10;
-			nom %= i;
 			if(nom == 0)
 				break;
 			if(mark[nom]){
@@ -47,9 +45,13 @@ inline void Solution(){
 				break;
 			}
 			mark[nom] = k;
+			nom *= 10;
+			nom %= i;
 		}
-		cout << i << " " << res << endl;
-		mx = max(mx,res);
+		if(res > mx){
+			mx = res;
+			ind = i;
+		}
 	}
-	cout << mx << endl;
+	cout << ind << endl;
 }

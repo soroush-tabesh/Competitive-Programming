@@ -1,5 +1,5 @@
 //In The Name of Allah
-//Tue 8/3/97
+//Thu 3/3/97
 #include <bits/stdc++.h>
 
 #define Init ios_base::sync_with_stdio(0),cin.tie(0),cout.tie(0)
@@ -23,6 +23,8 @@ const ll mod = 1e9+7,M = 2e5+100;
 
 void Solution();
 
+bool npr[M];
+
 int32_t main()
 {
 	Init;
@@ -30,6 +32,36 @@ int32_t main()
 	return 0;
 }
 
+map<int,int> decom(int a,int b){
+	map<int,int> res;
+	for(int i = 1;i*i <= a;i++){
+		while(!npr[i] && a%i==0){
+			a/=i;
+			res[i]++;
+		}
+	}
+	if(a-1)
+		res[a]++;
+	for(auto& x : res){
+		x.S *= b;
+	}
+	return res;
+}
+
 inline void Solution(){
-	
+	npr[0] = npr[1] = 1;
+	forar(i,M){
+		if(npr[i])
+			continue;
+		for(int j = i*2;j < M;j+=i){
+			npr[j] = 1;
+		}
+	}
+	map< map<int,int> ,bool> lst;
+	fori(a,2,101){
+		fori(b,2,101){
+			lst[decom(a,b)] = 1;
+		}
+	}
+	cout << lst.size() << endl;
 }

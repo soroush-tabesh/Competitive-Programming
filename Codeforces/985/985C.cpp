@@ -1,5 +1,5 @@
 //In The Name of Allah
-//Tue 8/3/97
+//Thu 31/2/97
 #include <bits/stdc++.h>
 
 #define Init ios_base::sync_with_stdio(0),cin.tie(0),cout.tie(0)
@@ -23,6 +23,9 @@ const ll mod = 1e9+7,M = 2e5+100;
 
 void Solution();
 
+int n,k,l;
+int len[M];
+
 int32_t main()
 {
 	Init;
@@ -31,5 +34,20 @@ int32_t main()
 }
 
 inline void Solution(){
-	
+	cin >> n >> k >> l;
+	forar(i,n*k){
+		cin >> len[i];
+	}
+	sort(len,len+n*k);
+	auto it = upper_bound(len,len+n*k,len[0]+l);
+	if(it-len >= n){
+		int lim = it-len;
+		ll res = 0;
+		forar(i,n){
+			res += len[min(i*k,lim-(n-i))];
+		}
+		cout << res << endl;
+	}else{
+		cout << 0 << endl;
+	}
 }

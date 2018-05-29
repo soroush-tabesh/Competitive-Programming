@@ -1,5 +1,5 @@
 //In The Name of Allah
-//Tue 8/3/97
+//Thu 6/3/97
 #include <bits/stdc++.h>
 
 #define Init ios_base::sync_with_stdio(0),cin.tie(0),cout.tie(0)
@@ -31,5 +31,19 @@ int32_t main()
 }
 
 inline void Solution(){
-	
+	int n;
+	map<int,int> dt;
+	forar(t,2){
+		cin >> n;
+		forar(i,n){
+			int a,x;
+			cin >> a >> x;
+			dt[a] = max(dt[a],x);
+		}
+	}
+	ll ans = 0;
+	for(auto x : dt){
+		ans += x.S;
+	}
+	cout << ans << endl;
 }

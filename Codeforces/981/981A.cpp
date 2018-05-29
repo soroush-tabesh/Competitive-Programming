@@ -1,5 +1,5 @@
 //In The Name of Allah
-//Tue 8/3/97
+//Thu 6/3/97
 #include <bits/stdc++.h>
 
 #define Init ios_base::sync_with_stdio(0),cin.tie(0),cout.tie(0)
@@ -31,5 +31,20 @@ int32_t main()
 }
 
 inline void Solution(){
-	
+	string s;
+	cin >> s;
+	int n = s.length();
+	int ans = 0;
+	fori(len,1,n+1){
+		forar(st,n+1-len){
+			bool ispal = true;
+			forar(i,len/2){
+				if(s[st+i] != s[st+len-1-i])
+					ispal = false;
+			}
+			if(!ispal)
+				ans = len;
+		}
+	}
+	cout << ans << endl;
 }

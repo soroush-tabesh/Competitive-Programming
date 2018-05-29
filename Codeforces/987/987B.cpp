@@ -31,5 +31,15 @@ int32_t main()
 }
 
 inline void Solution(){
-	
+	ld x,y;
+	cin >> x >> y;
+	ld eps = 1e-9;
+	ld lhs = log(x)*y;
+	ld rhs = log(y)*x;
+	if(lhs-eps <= rhs && lhs+eps >= rhs )
+		cout << "=" << endl;
+	else if(lhs < rhs)
+		cout << "<" << endl;
+	else
+		cout << ">" << endl;
 }

@@ -1,5 +1,6 @@
 //In The Name of Allah
 //Tue 8/3/97
+#pragma GCC optimize "-O"
 #include <bits/stdc++.h>
 
 #define Init ios_base::sync_with_stdio(0),cin.tie(0),cout.tie(0)
@@ -23,6 +24,10 @@ const ll mod = 1e9+7,M = 2e5+100;
 
 void Solution();
 
+int n,cmp;
+int arr[M*10];
+bool mark[M*10];
+
 int32_t main()
 {
 	Init;
@@ -30,6 +35,28 @@ int32_t main()
 	return 0;
 }
 
+void dfs(int v){
+	if(mark[v])
+		return;
+	mark[v] = 1;
+	dfs(arr[v]);
+}
+
 inline void Solution(){
-	
+	cin >> n;
+	forar(i,n){
+		cin >> arr[i];
+		--arr[i];
+	}
+	forar(i,n){
+		if(!mark[i]){
+			dfs(i);
+			cmp++;
+		}
+	}
+	int chn = n-cmp;
+	if((n%2 == 0) ^ (chn % 2 == 0))
+		cout << "Um-nik" << endl;
+	else
+		cout << "Petr" << endl;
 }

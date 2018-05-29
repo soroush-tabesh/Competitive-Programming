@@ -1,5 +1,6 @@
 //In The Name of Allah
-//Tue 8/3/97
+//Thu 31/2/97
+#pragma GCC optimize "-Ofast"
 #include <bits/stdc++.h>
 
 #define Init ios_base::sync_with_stdio(0),cin.tie(0),cout.tie(0)
@@ -31,5 +32,20 @@ int32_t main()
 }
 
 inline void Solution(){
-	
+	int n;
+	cin >> n;
+	int suma=0,sumb=0;
+	vector<int> lst;
+	forar(i,n/2){
+		int a;
+		cin >> a;
+		lst.pb(--a);
+	}
+	sort(lst.begin(),lst.end());
+	forar(i,n/2){
+		int a = lst[i];
+		suma += abs(a-2*i);
+		sumb += abs(a-2*i-1);
+	}
+	cout << min(suma,sumb) << endl;
 }

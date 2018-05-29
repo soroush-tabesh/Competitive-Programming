@@ -23,6 +23,9 @@ const ll mod = 1e9+7,M = 2e5+100;
 
 void Solution();
 
+ll n;
+ll sz[M],dp[3][M];
+
 int32_t main()
 {
 	Init;
@@ -31,5 +34,36 @@ int32_t main()
 }
 
 inline void Solution(){
-	
+	cin >> n;
+	ll inf = 1e10;
+	forar(i,n){
+		cin >> sz[i];
+	}
+	forar(i,n){
+		cin >> dp[0][i];
+	}
+	forar(i,n){
+		dp[1][i] = inf;
+	}
+	forar(i,n){
+		dp[2][i] = inf;
+	}
+	set<pll> srt[3];
+	fori(lay,1,3){
+		for(int i = n-1;i >= 0;i--){
+			auto it = srt[lay-1].upper_bound(mp(sz[i],inf));
+			while(it != srt[lay-1].end()){
+				dp[lay][i] = min(dp[lay][i],it->S+dp[0][i]);
+				++it;
+			}
+			srt[lay-1].emplace(sz[i],dp[lay-1][i]);
+		}
+	}
+	ll ans = inf;
+	forar(i,n){
+		ans = min(ans,dp[2][i]);
+	}
+	if(ans >= inf)
+		ans = -1;
+	cout << ans << endl;
 }

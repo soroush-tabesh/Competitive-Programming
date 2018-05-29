@@ -37,7 +37,7 @@ int main()
 	return 0;
 }
 
-void merge(ll abeg,ll aend,ll bbeg,ll bend){
+void imerge(ll abeg,ll aend,ll bbeg,ll bend){
 	ll mbegin = abeg;
 	ll tind = 0;
 	while(abeg < aend || bbeg < bend){
@@ -67,7 +67,7 @@ void mergeSort(ll mbegin, ll mend){
 	ll mid = (mbegin + mend)/2;
 	mergeSort(mbegin,mid);
 	mergeSort(mid,mend);
-	merge(mbegin,mid,mid,mend);
+	imerge(mbegin,mid,mid,mend);
 }
 
 void Solution(){

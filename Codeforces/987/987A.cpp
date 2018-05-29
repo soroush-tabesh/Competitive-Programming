@@ -31,5 +31,23 @@ int32_t main()
 }
 
 inline void Solution(){
-	
+	int n;
+	cin >> n;
+	map<string,string> dt;
+	dt["purple"] = "Power";
+	dt["green"] = "Time";
+	dt["blue"] = "Space";
+	dt["orange"] = "Soul";
+	dt["red"] = "Reality";
+	dt["yellow"] = "Mind";
+	forar(i,n){
+		string s;
+		cin >> s;
+		dt[s] = "";
+	}
+	cout << 6-n << endl;
+	for(auto x : dt){
+		if(x.S != "")
+			cout << x.S << endl;
+	}
 }

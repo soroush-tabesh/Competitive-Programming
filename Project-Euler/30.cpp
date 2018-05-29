@@ -1,5 +1,5 @@
 //In The Name of Allah
-//Tue 8/3/97
+//Thu 3/3/97
 #include <bits/stdc++.h>
 
 #define Init ios_base::sync_with_stdio(0),cin.tie(0),cout.tie(0)
@@ -31,5 +31,18 @@ int32_t main()
 }
 
 inline void Solution(){
-	
+	ll ans = 0;
+	fori(i,2,1e7){
+		ll res = 0;
+		ll x = i;
+		while(x){
+			ll t = x % 10;
+			res += t*t*t*t*t;
+			x /= 10;
+		}
+		if(i == res){
+			ans += i;
+		}
+	}
+	cout << ans << endl;
 }

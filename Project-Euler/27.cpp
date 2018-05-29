@@ -1,5 +1,5 @@
 //In The Name of Allah
-//Tue 8/3/97
+//Thu 3/3/97
 #include <bits/stdc++.h>
 
 #define Init ios_base::sync_with_stdio(0),cin.tie(0),cout.tie(0)
@@ -23,6 +23,8 @@ const ll mod = 1e9+7,M = 2e5+100;
 
 void Solution();
 
+bool npr[M];
+
 int32_t main()
 {
 	Init;
@@ -30,6 +32,29 @@ int32_t main()
 	return 0;
 }
 
+ll check(ll a,ll b){
+	ll t = 0;
+	while(!npr[abs(t*t + a*t + b)])
+		++t;
+	return t;
+}
+
 inline void Solution(){
-	
+	for(ll i = 2;i < M;i++){
+		if(npr[i])
+			continue;
+		for(ll j = 2*i;j < M;j += i)
+			npr[j] = true;
+	}
+	ll mx = 0,val = 0;
+	fori(a,-999,1000){
+		fori(b,-1000,1001){
+			ll t = check(a,b);
+			if(t > mx){
+				mx = t;
+				val = a*b;
+			}
+		}
+	}
+	cout << val << endl;
 }
