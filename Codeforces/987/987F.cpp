@@ -1,5 +1,5 @@
 //In The Name of Allah
-//Tue 8/3/97
+//Sat 12/3/97
 #pragma GCC optimize "-Ofast"
 #include <bits/stdc++.h>
 
@@ -20,13 +20,15 @@ typedef long double ld;
 typedef pair<int,int> pii;
 typedef pair<ll,ll> pll;
 
-const ll mod = 1e9+7,M = 1e6+100;
+const ll mod = 1e9+7,M = (1<<22) + 10;
 
 void Solution();
 
-int n,cmp;
+int n,m,ans,inv;
 int arr[M];
-bool mark[M];
+bool exs[M];
+bool marktrans[M];
+bool markmask[M];
 
 int32_t main()
 {
@@ -35,24 +37,38 @@ int32_t main()
 	return 0;
 }
 
-inline void Solution(){
-	cin >> n;
-	fori(i,1,n+1){
-		cin >> arr[i];
+void dfsmask(int v);
+
+void dfstrans(int v){
+	if(marktrans[v])
+		return;
+	marktrans[v] = 1;
+	dfsmask(v);
+	forar(i,n){
+		dfstrans(v|(1<<i));
 	}
-	fori(i,1,n+1){
-		if(!mark[i]){
-			int x = i;
-			do{
-				mark[x] = 1;
-				x = arr[x];
-			}while(x != i);
-			cmp++;
+}
+
+void dfsmask(int v){
+	if(!exs[v] || markmask[v])
+		return;
+	markmask[v] = 1;
+	dfstrans(v^inv);
+}
+
+inline void Solution(){
+	cin >> n >> m;
+	inv = (1<<n)-1;
+	forar(i,m){
+		cin >> arr[i];
+		arr[i] ^= inv;
+		exs[arr[i]] = 1;
+	}
+	forar(i,m){
+		if(!markmask[arr[i]]){
+			++ans;
+			dfsmask(arr[i]);
 		}
 	}
-	int chn = n-cmp;
-	if((n%2 == 0) ^ (chn % 2 == 0))
-		cout << "Um_nik" << endl;
-	else
-		cout << "Petr" << endl;
+	cout << ans << endl;
 }
