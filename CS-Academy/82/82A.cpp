@@ -1,6 +1,5 @@
 //In The Name of Allah
-//Tue 1/4/97
-#pragma GCC optimize "-Ofast"
+//Tue 30/3/97
 #include <bits/stdc++.h>
 
 #define Init ios_base::sync_with_stdio(0),cin.tie(0),cout.tie(0),cout << fixed << setprecision(12)
@@ -25,6 +24,8 @@ const ll mod = 1e9+7,M = 2e5+100;
 
 void Solution();
 
+int dt[M];
+
 int32_t main()
 {
 	Init;
@@ -36,5 +37,20 @@ int32_t main()
 }
 
 inline void Solution(){
-	
+	int n,m;
+	cin >> n >> m;
+	int sum = 0;
+	forar(i,m){
+		cin >> dt[i];
+	}
+	forar(i,m){
+		sum += dt[i];
+		if(sum*2 == n){
+			cout << -1 << endl;
+			break;
+		}else if(sum*2 > n){
+			cout << i+1 << endl;
+			break;
+		}
+	}
 }
