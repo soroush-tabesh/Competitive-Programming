@@ -34,8 +34,10 @@ int32_t main(){
 	cerr << endl << "Elapsed : " << ld((_t2 - _t1).count())/(1e9) << endl;
 	return 0;
 }
+
 ll ck[4] = {50,10,5,1};
 set<int> nums;
+
 void solve(int n,int s,ll curs){
 	if(s == 3){
 		nums.insert(n+curs);
