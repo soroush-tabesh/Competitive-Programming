@@ -1,5 +1,5 @@
 //In The Name of Allah
-//Tue 10/4/97
+//Tue 11/4/97
 #pragma GCC optimize "-Ofast"
 #include <bits/stdc++.h>
 
@@ -41,15 +41,13 @@ struct fenwick
 	int n = 0;
 	void init(int _n){
 		n = _n;
-		if(fen != NULL)
-			delete[] fen;
+		if(fen != NULL) delete[] fen;
 		fen = (int*)calloc(n,sizeof(int));
 	}
 	void add(int x,int pos){
 		assert(pos>0);
 		for(;pos < n;pos+=LSB(pos)) fen[pos] += x;
 	}
-
 	int get(int pos){
 		int res = 0;
 		for(;pos > 0;pos-=LSB(pos))res+=fen[pos];
@@ -67,6 +65,7 @@ inline void Solution(){
 	lps = (int*) calloc(n+10,sizeof(int));
 	seq = (int*) calloc(m+10,sizeof(int));
 	asoc = (int*) calloc(m+10,sizeof(int));
+
 	forar(i,n){
 		int a;
 		cin >> a;
@@ -86,15 +85,13 @@ inline void Solution(){
 		pat[i] = fen.get(perm[i]);
 		fen.add(1,perm[i]);
 	}
-
 	// lps
 	fen.init(n+10);
 	fori(i,1,n){
 		lps[i] = lps[i-1];
 		while(lps[i] && pat[lps[i]] != fen.get(perm[i])){
-			forar(j,lps[i]-lps[lps[i]-1]){
+			forar(j,lps[i]-lps[lps[i]-1])
 				fen.add(-1,perm[i-lps[i]+j]);
-			}
 			lps[i] = lps[lps[i]-1];
 		}
 		if(pat[lps[i]] == fen.get(perm[i])){
@@ -102,16 +99,14 @@ inline void Solution(){
 			++lps[i];
 		}
 	}
-
 	// search
 	fen.init(m+10);
 	vector<int> ans;
 	int pt = 0;
 	forar(i,m){
 		while(pt && pat[pt] != fen.get(seq[i])){
-			forar(j,pt-lps[pt-1]){
+			forar(j,pt-lps[pt-1])
 				fen.add(-1,seq[i-pt+j]);
-			}
 			pt = lps[pt-1];
 		}
 		if(pat[pt] == fen.get(seq[i])){
@@ -119,16 +114,13 @@ inline void Solution(){
 			++pt;
 		}
 		if(pt == n){
-			forar(j,pt-lps[pt-1]){
-				fen.add(-1,seq[i-pt+j]);
-			}
+			forar(j,pt-lps[pt-1])
+				fen.add(-1,seq[i-pt+j+1]);
 			pt = lps[pt-1];
 			ans.pb(i-n+2);
 		}
 	}
-	
 	cout << ans.size() << endl;
-	for(int x : ans){
+	for(int x : ans)
 		cout << x << " ";
-	}
 }
