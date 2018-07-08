@@ -1,5 +1,5 @@
 //In The Name of Allah
-//Tue 11/4/97
+//Tue 16/4/97
 #pragma GCC optimize "-Ofast"
 #include <bits/stdc++.h>
 
@@ -35,6 +35,58 @@ int32_t main(){
 	return 0;
 }
 
+int n;
+struct rect
+{
+	int lui,luj,rdi,rdj,id;
+} rects[5001];
+struct point
+{
+	int i,j;
+} ans[5001];
+bool markud[5000],marklr[5000];
+
 inline void Solution(){
-	
+	cin >> n;
+	forar(i,n){
+		cin >> rects[i].lui >> rects[i].luj >> rects[i].rdi >> rects[i].rdj;
+		rects[i].id = i;
+	}
+	fori(pi,1,n+1){
+		int ind = -1;
+		forar(t,n){
+			if(markud[t] || pi < rects[t].lui || pi > rects[t].rdi)
+				continue;
+			if(ind == -1)
+				ind = t;
+			else if(rects[t].rdi < rects[ind].rdi)
+				ind = t;
+		}
+		if(ind == -1){
+			cout << "NIE" << endl;
+			return;
+		}
+		markud[ind] = 1;
+		ans[ind].i = pi;
+	}
+	fori(pj,1,n+1){
+		int ind = -1;
+		forar(t,n){
+			if(marklr[t] || pj < rects[t].luj || pj > rects[t].rdj)
+				continue;
+			if(ind == -1)
+				ind = t;
+			else if(rects[t].rdj < rects[ind].rdj)
+				ind = t;
+		}
+		if(ind == -1){
+			cout << "NIE" << endl;
+			return;
+		}
+		marklr[ind] = 1;
+		ans[ind].j = pj;
+	}
+	forar(_i,n){
+		cout << ans[_i].i << " " << ans[_i].j << endl;
+	}
 }
