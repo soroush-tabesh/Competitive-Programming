@@ -63,7 +63,7 @@ void getComp(int v){
 }
 
 inline void Solution(){
-	// A complete kosaraju'scc example
+	// A complete kosaraju's scc example
 	cin >> n >> m;
 	forar(i,m){
 		int a,b;

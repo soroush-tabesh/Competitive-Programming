@@ -65,7 +65,7 @@ inline void Solution(){
 	p.resize(n = distance(p.begin(),unique(p.begin(),p.end()))); // remove duplicates
 	p0 = p[0];
 	sort(p.begin()+1,p.end(),comp); // polar sorting ccw
-	p.resize(n = distance(p.begin(),unique(p.begin()+1,p.end(),comp2))); // keeping farthest points for equal angles
+	p.resize(n = distance(p.begin(),unique(p.begin()+1,p.end(),comp2))); // keeping furthest points for equal angles
 	if(n<3){
 		cout << -1 << endl;
 		return;
