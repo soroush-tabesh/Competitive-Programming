@@ -1,5 +1,5 @@
 //In The Name of Allah
-//Mon 18/4/97
+//Thr 28/4/97
 #pragma GCC optimize "-Ofast"
 #include <bits/stdc++.h>
 
@@ -22,7 +22,7 @@ typedef long double ld;
 typedef pair<int,int> pii;
 typedef pair<ll,ll> pll;
 
-const ll mod = 1e9+7,M = 500;
+const ll mod = 1e9+7,M = 2e5+100,inf = 1e17;
 
 void Solution();
 
@@ -35,54 +35,39 @@ int32_t main(){
 	return 0;
 }
 
-int n,ans;
-struct circle
-{
-	ll x,y,r;
-} circs[M];
-vector<int> adj[M];
+ll n,lin[M],lout[M],dp[M];
 bool mark[M];
-int match[M];
 
-bool isInscribed(circle a,circle b){ //is b in a
-	ll odist = (a.x - b.x)*(a.x - b.x) + (a.y - b.y)*(a.y - b.y);
-	ll dif = (a.r-b.r)*(a.r-b.r);
-	return dif>odist && a.r>b.r;
-}
-
-bool dfs(int v){
-	if(mark[v])
-		return false;
-	mark[v] = 1;
-	for(int neib : adj[v]){
-		if(match[neib] == -1 || dfs(match[neib])){
-			match[neib] = v;
-			return true;
-		}
+ll getdp(ll x){
+	if(mark[x])
+		return dp[x];
+	mark[x] = 1;
+	dp[x] = inf;
+	fori(t,1,4){
+		if(t>x)
+			break;
+		do{
+			ll res = 0;
+			bool is = true;
+			forar(i,t){
+				is &= lin[x-t+i] != lout[x-t+i];
+				res += abs(lin[x-t+i] - lout[x-t+i]);
+			}
+			if(!is)
+				continue;
+			dp[x] = min(dp[x],res+getdp(x-t));
+		}while(next_permutation(lout+x-t,lout+x));
 	}
-	return false;
+	return dp[x];
 }
 
 inline void Solution(){
 	cin >> n;
 	forar(i,n){
-		cin >> circs[i].x >> circs[i].y >> circs[i].r;
+		cin >> lin[i] >> lout[i];
 	}
-	forar(i,n){
-		forar(j,n){
-			if(isInscribed(circs[i],circs[j])){
-				adj[i].pb(j);
-			}
-		}
-	}
-	fill(match,match+n,-1);
-	forar(i,n){
-		memset(mark,0,sizeof mark);
-		dfs(i);
-	}
-	forar(i,n){
-		if(match[i] == -1)
-			++ans;
-	}
-	cout << ans << endl;
+	sort(lin,lin+n);
+	sort(lout,lout+n);
+	mark[0] = 1;
+	cout << getdp(n) << endl;
 }
