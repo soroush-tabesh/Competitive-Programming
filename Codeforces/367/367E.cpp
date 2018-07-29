@@ -35,6 +35,46 @@ int32_t main(){
 	return 0;
 }
 
+int n,m,x;
+int*** dp;
+
+inline void madd(int &a,ll b){
+	a = (1LL * a + b)%mod;
+}
+
+ll fac(ll x){
+	return x ? (x*fac(x-1))%mod : 1;
+}
+
 inline void Solution(){
-	
+	cin >> n >> m >> x;
+	if(n > m){
+		cout << 0 << endl;
+		return;
+	}
+	dp = new int**[m+1];
+	forar(i,m+1){
+		dp[i] = new int*[n+2];
+		forar(j,n+2){
+			dp[i][j] = new int[n+2];
+			forar(k,n+2){
+				dp[i][j][k] = 0;
+			}
+		}
+	}
+	dp[0][0][0] = 1;
+	forar(i,m){
+		forar(j,min(n,i)+1){
+			forar(k,min(n,m-i)+1){
+				madd(dp[i+1][j][k+1],dp[i][j][k]); // open
+				madd(dp[i+1][j+1][k],dp[i][j][k]); // open and close
+				if(x != i+1){
+					madd(dp[i+1][j][k],dp[i][j][k]); // non
+					if(k)
+						madd(dp[i+1][j+1][k-1],dp[i][j][k]); // close
+				}
+			}
+		}
+	}
+	cout << (dp[m][n][0] * fac(n))%mod << endl;
 }
