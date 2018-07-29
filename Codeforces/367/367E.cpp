@@ -1,5 +1,5 @@
 //In The Name of Allah
-//Wed 3/5/97
+//Sun 7/5/97
 #pragma GCC optimize "-Ofast"
 #include <bits/stdc++.h>
 
@@ -35,33 +35,6 @@ int32_t main(){
 	return 0;
 }
 
-ll n,m,dp[1<<20][20],ans;
-bool adj[20][20];
-
 inline void Solution(){
-	cin >> n >> m;
-	forar(i,m){
-		int a,b;
-		cin >> a >> b;
-		--a,--b;
-		adj[a][b] = adj[b][a] = 1;
-		dp[(1<<a)|(1<<b)][max(a,b)] = 1;
-	}
-	fori(mask,1,1<<n){
-		forar(i,n){
-			if(!(mask&(1<<i)) || LSB(mask) == (1<<i))
-				continue;
-			forar(j,n){
-				if(!adj[i][j] || !(mask&(1<<j)) || LSB(mask) == (1<<j))
-					continue;
-				dp[mask][i] += dp[mask^(1<<i)][j];
-			}
-			int t = LSB(mask),tn = 0;
-			while((t&1) == 0)
-				t>>=1,++tn;
-			if(adj[i][tn]&&mask!=((1<<i)|(1<<tn)))
-				ans += dp[mask][i];
-		}
-	}
-	cout << ans/2 << endl;
+	
 }
