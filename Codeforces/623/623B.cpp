@@ -37,20 +37,35 @@ int32_t main(){
 
 ll n,a,b;
 ll arr[M];
-ll dp[M][3];
+ll dp[M][3];// 0:no-removing 1:strict-suf 2:non-touch-interval
 
-ll solve(ll g){
+ll solve(ll g,int st,int en){
 	if(g == 1)
 		return inf;
-	dp[0][1] = a;
-	if(arr[0]%g == 0){
-		dp[0][0] = 0;
-	}else if(arr[0]%g == 1 || arr[0]%g==g-1){
-		dp[0][0] = min(a,b);
-	}else{
-		dp[0][0] = a;
+	dp[st][1] = a;
+	dp[st][2] = inf;
+	if(arr[st]%g == 0)
+		dp[st][0] = 0;
+	else if(arr[st]%g == 1 || arr[st]%g==g-1)
+		dp[st][0] = b;
+	else
+		dp[st][0] = inf;
+	fori(i,st+1,en){
+		dp[i][1] = min(dp[i-1][0],dp[i-1][1])+a;
+		if(arr[i]%g == 0){
+			dp[i][0] = dp[i-1][0];
+			dp[i][2] = min(dp[i-1][2],dp[i-1][1]);
+		}else if(arr[i]%g == 1 || arr[i]%g==g-1){
+			dp[i][0] = dp[i-1][0] + b;
+			dp[i][2] = min(dp[i-1][2],dp[i-1][1])+b;
+		}else{
+			dp[i][0] = inf;
+			dp[i][2] = inf;
+		}
+		dp[i][0] = min(dp[i][0],inf);
+		dp[i][2] = min(dp[i][2],inf);
 	}
-	
+	return min(dp[en-1][0],min(dp[en-1][1],dp[en-1][2]));
 }
 
 inline void Solution(){
@@ -59,15 +74,21 @@ inline void Solution(){
 		cin >> arr[i];
 	}
 	ll ans = inf;
-	Log(solve(3));
+	vector<int> lst;
+	fori(i,-1,2){
+		//lst.pb
+	}
 	for(ll d = 1;d*d <= max(arr[0],arr[n-1]);++d){
 		if(arr[0]%d && arr[n-1]%d)
 			continue;
-		ans = min(ans,solve(d));
-		if(arr[0]%d==0)
-			ans = min(ans,solve(arr[0]/d));
-		if(arr[n-1]%d==0)
-			ans = min(ans,solve(arr[n-1]/d));
+		if(arr[0]%d==0){
+			ans = min(ans,solve(arr[0]/d,1,n));
+			ans = min(ans,solve(d,1,n));
+		}
+		if(arr[n-1]%d==0){
+			ans = min(ans,solve(arr[n-1]/d,0,n-1));
+			ans = min(ans,solve(d,0,n-1));
+		}
 	}
 	cout << ans << endl;
 }
